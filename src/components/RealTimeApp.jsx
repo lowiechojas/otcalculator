@@ -6,7 +6,7 @@ export default function RealTimeApp() {
  const REQUIRED_HOURS = 9;
 const REQUIRED_MINUTES = 15;
 
-
+const [dateIn, setDateIn] = useState("");
 const [timeIn, setTimeIn] = useState("");
 const [timeOut, setTimeOut] = useState("");
 const [totalHours, setTotalHours] = useState("-");
@@ -56,7 +56,9 @@ setOvertime(ot > 0 ? minutesToHM(ot) : "0h 0m");
 }
 
 
-useEffect(calculate, [timeIn, timeOut]);
+useEffect(
+    calculate, [timeIn, timeOut]
+);
 
 
 function computeTimeOutFromTimeIn() {
@@ -71,6 +73,7 @@ setTimeOut(`${h}:${m}`);
 
 
 function addLog() {
+    console.log("Adding log with:", {timeIn, timeOut, totalHours, overtime, dateIn});
 if (!timeIn || !timeOut) return;
 setLogs([
 ...logs,
@@ -79,7 +82,7 @@ timeIn,
 timeOut,
 totalHours,
 overtime,
-date: new Date().toLocaleString(),
+dateIn,
 },
 ]);
 }
@@ -90,6 +93,8 @@ return (
 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-lg">
 <h1 className="text-3xl font-bold text-center mb-6">Time-out and OT Calculator</h1>
 
+<label className="block mb-2 font-semibold">Date:</label>
+<input type="date" className="w-full p-3 border rounded-xl mb-4" value={dateIn} onChange={(e) => setDateIn(e.target.value)} />
 
 <label className="block mb-2 font-semibold">Time In:</label>
 <input type="time" className="w-full p-3 border rounded-xl mb-4" value={timeIn} onChange={(e) => setTimeIn(e.target.value)} />
@@ -115,7 +120,7 @@ return (
 <div className="max-h-60 overflow-y-auto p-2 bg-gray-50 rounded-xl shadow-inner">
 {logs.map((log, i) => (
 <div key={i} className="p-3 border-b">
-<p><strong>Date:</strong> {log.date}</p>
+<p><strong>Date:</strong> {log.dateIn}</p>
 <p><strong>In:</strong> {log.timeIn} | <strong>Out:</strong> {log.timeOut}</p>
 <p><strong>Total:</strong> {log.totalHours}</p>
 <p><strong>OT:</strong> {log.overtime}</p>
