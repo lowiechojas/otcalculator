@@ -97,11 +97,11 @@ return (
 <input type="date" className="w-full p-3 border rounded-xl mb-4" value={dateIn} onChange={(e) => setDateIn(e.target.value)} />
 
 <label className="block mb-2 font-semibold">Time In:</label>
-<input type="time" className="w-full p-3 border rounded-xl mb-4" value={timeIn} onChange={(e) => setTimeIn(e.target.value)} />
+<input type="time" className="w-full p-3 border border-green-500 border-2 rounded-xl mb-4" value={timeIn} onChange={(e) => setTimeIn(e.target.value)} />
 
 
-<label className="block mb-2 font-semibold">Time Out:</label>
-<input type="time" className="w-full p-3 border rounded-xl mb-4" value={timeOut} onChange={(e) => setTimeOut(e.target.value)} />
+<label className="block mb-2 font-semibold timeOut">Time Out:</label>
+<input type="time" className="w-full p-3 border border-red-500 rounded-xl border-2 mb-4" value={timeOut} onChange={(e) => setTimeOut(e.target.value)} />
 
 
 <button onClick={computeTimeOutFromTimeIn} className="w-full bg-blue-600 text-white py-3 rounded-xl mb-4 hover:bg-blue-700">Compute Required Time Out</button>

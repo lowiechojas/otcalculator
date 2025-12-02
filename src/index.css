@@ -1,3 +1,22 @@
 @import "tailwindcss";
 
+input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+input[type="time"], input[type="date"] {
+    padding-left: 10%;
+    padding-right: 10%;
+    border-radius: 50px;
+    font-size: x-large;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    justify-items: space-around;
+}
+
+
+
 
