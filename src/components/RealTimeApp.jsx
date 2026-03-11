@@ -139,9 +139,17 @@ return (
 
 </div>
 
-    
-    <div className="max-h-full grid overflow-y-hidden p-2 bg-gray-50 rounded-xl shadow-inner">
-        <h2 className="text-xl font-bold mt-6 mb-2">Logs</h2>
+    <h2 className="text-xl font-bold mt-6 mb-2">
+            <button className="hover:cursor-pointer"
+            onClick={() => {const logsDiv = document.getElementById("logs");
+if (logsDiv) {
+logsDiv.classList.toggle("hidden");
+logsDiv.classList.toggle("grid");
+}}}
+            >Logs</button>
+        </h2>
+    <div id="logs" className="max-h-full grid overflow-y-hidden p-2 bg-gray-50 rounded-xl shadow-inner">
+        
         {logs.map((log, i) => (
             <div key={i} className="p-3 border-b">
             <p><strong>Date:</strong> {log.dateIn}</p>
