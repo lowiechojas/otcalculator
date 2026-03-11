@@ -1,11 +1,14 @@
 import "../index.css";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function RealTimeApp() {
- const REQUIRED_HOURS = 9;
+const REQUIRED_HOURS = 9;
 const REQUIRED_MINUTES = 15;
 
+const [hoursRequired, setHoursRequired] = useState(REQUIRED_HOURS);
+const [minutesRequired, setMinutesRequired] = useState(REQUIRED_MINUTES);
 const [dateIn, setDateIn] = useState("");
 const [timeIn, setTimeIn] = useState("");
 const [timeOut, setTimeOut] = useState("");
@@ -15,6 +18,9 @@ const [logs, setLogs] = useState(() => {
 const saved = localStorage.getItem("timeLogs");
 return saved ? JSON.parse(saved) : [];
 });
+
+
+
 
 
 useEffect(() => {
@@ -72,6 +78,11 @@ setTimeOut(`${h}:${m}`);
 }
 
 
+function computeRequiredHours(){
+
+}
+
+
 function addLog() {
     console.log("Adding log with:", {timeIn, timeOut, totalHours, overtime, dateIn});
 if (!timeIn || !timeOut) return;
@@ -87,11 +98,21 @@ dateIn,
 ]);
 }
 
+function deleteLogs() {
+    localStorage.removeItem("timeLogs");
+    setLogs([]);
+}
+
 
 return (
-<div className="min-h-screen bg-gray-100 p-6 flex justify-center">
+<div className="min-h-screen bg-gray-100 p-6 flex flex-row justify-center">
+
 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-lg">
+    <div className="grid">
 <h1 className="text-3xl font-bold text-center mb-6">Time-out and OT Calculator</h1>
+
+<label className="block mb-2 font-semibold">Required hours:</label>
+<input type="number" className="w-full p-3 border rounded-xl mb-4"/>
 
 <label className="block mb-2 font-semibold">Date:</label>
 <input type="date" className="w-full p-3 border rounded-xl mb-4" value={dateIn} onChange={(e) => setDateIn(e.target.value)} />
@@ -112,22 +133,29 @@ return (
 <p className="text-lg font-semibold text-red-600">Overtime: {overtime}</p>
 </motion.div>
 
+<button onClick={addLog} className="w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 mb-4">Save Log</button>
+<button onClick={deleteLogs} className="w-full bg-red-600 text-white py-3 rounded-xl hover:bg-green-700">Delete Logs</button>
 
-<button onClick={addLog} className="w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700">Save Log</button>
 
-
-<h2 className="text-xl font-bold mt-6 mb-2">Logs</h2>
-<div className="max-h-60 overflow-y-auto p-2 bg-gray-50 rounded-xl shadow-inner">
-{logs.map((log, i) => (
-<div key={i} className="p-3 border-b">
-<p><strong>Date:</strong> {log.dateIn}</p>
-<p><strong>In:</strong> {log.timeIn} | <strong>Out:</strong> {log.timeOut}</p>
-<p><strong>Total:</strong> {log.totalHours}</p>
-<p><strong>OT:</strong> {log.overtime}</p>
 </div>
-))}
-</div>
+
+    
+    <div className="max-h-full grid overflow-y-hidden p-2 bg-gray-50 rounded-xl shadow-inner">
+        <h2 className="text-xl font-bold mt-6 mb-2">Logs</h2>
+        {logs.map((log, i) => (
+            <div key={i} className="p-3 border-b">
+            <p><strong>Date:</strong> {log.dateIn}</p>
+            <p><strong>In:</strong> {log.timeIn} | <strong>Out:</strong> {log.timeOut}</p>
+            <p><strong>Total:</strong> {log.totalHours}</p>
+            <p><strong>OT:</strong> {log.overtime}</p>
+        </div>
+        ))}
+    </div>
 </motion.div>
+
+<div>
+<Analytics />
+</div>
 </div>
 );
 }

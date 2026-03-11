@@ -6,7 +6,7 @@ input {
   -moz-appearance: none;
 }
 
-input[type="time"], input[type="date"] {
+input[type="time"], input[type="date"], input[type="number"] {
     padding-left: 10%;
     padding-right: 10%;
     border-radius: 50px;
@@ -16,6 +16,7 @@ input[type="time"], input[type="date"] {
     text-align: center;
     justify-items: space-around;
 }
+
 
 
 
